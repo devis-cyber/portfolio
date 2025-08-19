@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Devis Tech - Frontend Developer</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- Header / Navbar -->
+  <header>
+    <div class="header-container">
+      <div class="logo">Devis Tech</div>
+
+      <!-- Desktop Navbar -->
+      <ul class="navbar">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="skills.html">Skills</a></li>
+        <li><a href="projects.html">Projects</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+
+      <!-- Toggle Button for mobile -->
+      <div class="toggle-btn" id="toggle-btn">☰</div>
+    </div>
+  </header>
+
+  <!-- Sidebar (Mobile) -->
+  <ul class="sidebar" id="sidebar">
+    <li><a href="#hero">Home</a></li>
+    <li><a href="#about">About</a></li>
+    <li><a href="#services">Skills</a></li>
+    <li><a href="project.html">Projects</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+
+  <!-- Hero Section -->
+  <section class="hero" id="hero">
+    <div class="hero-content">
+      <img src="profile.jpg" alt="Pius Victor" class="profile-img">
+      <h1>Devis Tech</h1>
+      <h2>Frontend Developer</h2>
+      <p>Building modern, responsive, and user-friendly websites.</p>
+      <a href="https://www.example.com" target="_blank" class="hero-btn">Visit Portfolio</a>
+    </div>
+  </section>
+
+  <!-- JS for Sidebar Toggle -->
+  <script>
+    const toggleBtn = document.getElementById('toggle-btn');
+    const sidebar = document.getElementById('sidebar');
+
+    toggleBtn.addEventListener('click', () => {
+      sidebar.classList.toggle('active');
+    });
+  </script>
+
+</body>
+</html>

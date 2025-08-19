@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Devis Tech • Projects</title>
+  <style>
+    :root {
+      --brand: #0ea5e9;
+      --ink: #0f172a;
+      --muted: #64748b;
+      --card: #ffffff;
+      --bg: #f8fafc;
+    }
+
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      background: var(--bg);
+      color: var(--ink);
+    }
+
+    header {
+      position: sticky;
+      top: 0;
+      background: #0b1220;
+      color: #fff;
+      padding: 14px 20px;
+      z-index: 10;
+    }
+    .wrap { max-width: 1100px; margin: 0 auto; padding: 0 16px; }
+    .brand { font-weight: 700; }
+
+    section { padding: 56px 0; }
+    h1 {
+      font-size: clamp(28px, 5vw, 44px);
+      text-align: center;
+      margin: 0 0 10px;
+    }
+    .intro {
+      max-width: 760px;
+      margin: 0 auto 28px;
+      text-align: center;
+      color: var(--muted);
+    }
+
+    .filters {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      justify-content: center;
+      margin-bottom: 26px;
+    }
+    .filter-btn {
+      border: 1px solid #cbd5e1;
+      background: #fff;
+      border-radius: 999px;
+      padding: 8px 14px;
+      color: var(--ink);
+      cursor: pointer;
+    }
+    .filter-btn.active,
+    .filter-btn:hover {
+      background: var(--brand);
+      border-color: var(--brand);
+      color: #fff;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 18px;
+    }
+    .card {
+      background: var(--card);
+      border-radius: 16px;
+      box-shadow: 0 8px 24px rgba(2, 6, 23, .06);
+      overflow: hidden;
+      transition: transform .25s ease, box-shadow .25s ease;
+    }
+    .card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 12px 28px rgba(2, 6, 23, .1);
+    }
+    .thumb {
+      background: linear-gradient(180deg, #e2f2ff, #f8fbff);
+      display: grid;
+      place-items: center;
+      height: 180px;
+    }
+    .thumb svg { width: 82%; height: 82%; }
+    .body { padding: 16px; }
+    .title { font-weight: 700; margin: 0 0 6px; }
+    .desc { margin: 0 0 12px; color: var(--muted); font-size: 14.5px; }
+    .row { display: flex; gap: 10px; }
+    .btn {
+      appearance: none;
+      border: 0;
+      background: var(--brand);
+      color: #fff;
+      border-radius: 10px;
+      padding: 10px 14px;
+      font-weight: 600;
+      cursor: pointer;
+    }
+    .btn.ghost {
+      background: #eef6ff;
+      color: #0369a1;
+    }
+
+    /* Modal */
+    .modal {
+      position: fixed;
+      inset: 0;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      background: rgba(2, 6, 23, .6);
+      padding: 16px;
+    }
+    .modal.open { display: flex; }
+    .modal-card {
+      max-width: 760px;
+      width: 100%;
+      background: #fff;
+      border-radius: 18px;
+      overflow: hidden;
+      box-shadow: 0 20px 60px rgba(2, 6, 23, .3);
+      animation: pop .25s ease;
+    }
+    @keyframes pop {
+      from { transform: scale(.96); opacity: .6; }
+      to { transform: scale(1); opacity: 1; }
+    }
+    .modal-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 14px 16px;
+      border-bottom: 1px solid #e5e7eb;
+    }
+    .close {
+      border: 0;
+      background: #eff6ff;
+      color: #0ea5e9;
+      border-radius: 10px;
+      padding: 8px 12px;
+      cursor: pointer;
+    }
+    .modal-body {
+      display: grid;
+      grid-template-columns: 1.4fr 1fr;
+      gap: 18px;
+      padding: 16px;
+    }
+    .modal-illu {
+      background: linear-gradient(180deg, #e2f2ff, #f8fbff);
+      display: grid;
+      place-items: center;
+      border-radius: 12px;
+      min-height: 260px;
+    }
+    .modal-illu svg { width: 88%; height: 88%; }
+    .meta h3 { margin: 0 0 8px; }
+    .meta p { color: var(--muted); }
+    @media (max-width: 800px) {
+      .modal-body { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="wrap">
+      <div class="brand">Devis Tech</div>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <section>
+      <h1>Projects</h1>
+      <p class="intro">
+        Representative visuals that match each project type exactly — no random photos. 
+        Replace with real screenshots anytime.
+      </p>
+      <div class="filters" id="filters"></div>
+      <div class="grid" id="grid"></div>
+    </section>
+  </main>
+
+  <!-- Modal -->
+  <div class="modal" id="modal" aria-hidden="true">
+    <div class="modal-card">
+      <div class="modal-head">
+        <strong id="mTitle">Project</strong>
+        <button class="close" id="mClose">Close</button>
+      </div>
+      <div class="modal-body">
+        <div class="modal-illu" id="mIllu"></div>
+        <div class="meta">
+          <h3 id="mHeading"></h3>
+          <p id="mDesc"></p>
+          <div style="margin-top:14px; display:flex; gap:10px; flex-wrap:wrap">
+            <a id="mLive" href="#" target="_blank" class="btn">View Live</a>
+            <a id="mCode" href="#" target="_blank" class="btn ghost">Source Code</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    /* ---- Data ---- */
+    const PROJECTS = [
+      { title: "Portfolio Website", type: "portfolio", desc: "A personal portfolio with smooth sections, responsive layout, and contact CTAs.", live: "#", code: "#" },
+      { title: "Todo App", type: "todo", desc: "A JavaScript task manager with localStorage, filters, and keyboard shortcuts.", live: "#", code: "#" },
+      { title: "UI Concept", type: "ui", desc: "A clean mobile-first UI concept with micro-interactions and component library.", live: "#", code: "#" },
+      { title: "E-Commerce Website", type: "ecommerce", desc: "Responsive storefront with product grid, cart, and checkout mock flow.", live: "#", code: "#" }
+    ];
+
+    /* ---- SVG Icons ---- */
+    const SVGs = {
+      portfolio: `<svg>…</svg>`,
+      todo: `<svg>…</svg>`,
+      ui: `<svg>…</svg>`,
+      ecommerce: `<svg>…</svg>`
+    };
+
+    /* ---- Filters ---- */
+    const TYPES = [
+      { key:"all", label:"All" },
+      { key:"portfolio", label:"Portfolio Sites" },
+      { key:"todo", label:"JavaScript Apps" },
+      { key:"ui", label:"UI Concepts" },
+      { key:"ecommerce", label:"E-commerce" }
+    ];
+
+    const grid = document.getElementById('grid');
+    const filters = document.getElementById('filters');
+    const modal = document.getElementById('modal');
+    const mClose = document.getElementById('mClose');
+    const mTitle = document.getElementById('mTitle');
+    const mHeading = document.getElementById('mHeading');
+    const mDesc = document.getElementById('mDesc');
+    const mIllu = document.getElementById('mIllu');
+    const mLive = document.getElementById('mLive');
+    const mCode = document.getElementById('mCode');
+
+    TYPES.forEach((t,i) => {
+      const b = document.createElement('button');
+      b.className = 'filter-btn' + (i===0 ? ' active' : '');
+      b.textContent = t.label;
+      b.dataset.filter = t.key;
+      b.onclick = () => applyFilter(t.key, b);
+      filters.appendChild(b);
+    });
+
+    function render(list){
+      grid.innerHTML = '';
+      list.forEach(p => {
+        const card = document.createElement('div');
+        card.className = 'card';
+        card.innerHTML = `
+          <div class="thumb">${SVGs[p.type] || ''}</div>
+          <div class="body">
+            <h3 class="title">${p.title}</h3>
+            <p class="desc">${p.desc}</p>
+            <div class="row">
+              <button class="btn" data-action="view">View</button>
+              <a class="btn ghost" href="${p.code}" target="_blank">Code</a>
+            </div>
+          </div>`;
+        card.querySelector('[data-action="view"]').onclick = () => openModal(p);
+        grid.appendChild(card);
+      });
+    }
+
+    function applyFilter(type, btn){
+      document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      const list = type === 'all' ? PROJECTS : PROJECTS.filter(p => p.type === type);
+      render(list);
+    }
+
+    function openModal(p){
+      mTitle.textContent = p.title;
+      mHeading.textContent = p.title;
+      mDesc.textContent = p.desc;
+      mIllu.innerHTML = SVGs[p.type] || '';
+      mLive.href = p.live || '#';
+      mCode.href = p.code || '#';
+      modal.classList.add('open');
+      modal.setAttribute('aria-hidden','false');
+    }
+
+    mClose.onclick = () => {
+      modal.classList.remove('open');
+      modal.setAttribute('aria-hidden','true');
+    };
+
+    modal.onclick = (e) => { if(e.target === modal) mClose.click(); };
+
+    // init
+    render(PROJECTS);
+  </script>
+</body>
+</html>

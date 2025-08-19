@@ -1,0 +1,166 @@
+:root {
+  --brand: #0ea5e9;
+  --ink: #0f172a;
+  --muted: #64748b;
+  --card: #ffffff;
+  --bg: #f8fafc;
+}
+
+/* Reset */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: Arial, sans-serif;
+  background: var(--bg);
+  color: var(--ink);
+  line-height: 1.6;
+}
+
+/* Header */
+header {
+  background: var(--card);
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+}
+
+.header-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  max-width: 1200px;
+  margin: auto;
+  padding: 15px 20px;
+}
+
+.logo {
+  font-size: 20px;
+  font-weight: bold;
+  color: var(--brand);
+}
+
+/* Navbar */
+.navbar {
+  list-style: none;
+  display: flex;
+  gap: 20px;
+}
+
+.navbar li a {
+  text-decoration: none;
+  color: var(--ink);
+  font-weight: 500;
+  transition: color 0.3s;
+}
+
+.navbar li a:hover {
+  color: var(--brand);
+}
+
+/* Toggle button */
+.menu-toggle {
+  display: none;
+  font-size: 28px;
+  color: var(--brand);
+  cursor: pointer;
+}
+
+/* Projects Section */
+.projects {
+  padding: 60px 20px;
+  text-align: center;
+}
+
+.projects .container {
+  max-width: 1200px;
+  margin: auto;
+}
+
+.projects h1 {
+  font-size: 32px;
+  margin-bottom: 10px;
+  color: var(--ink);
+}
+
+.projects .intro {
+  color: var(--muted);
+  margin-bottom: 40px;
+}
+
+.projects-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 20px;
+}
+
+.project-card {
+  background: var(--card);
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+  text-align: left;
+  transition: transform 0.2s;
+}
+
+.project-card:hover {
+  transform: translateY(-5px);
+}
+
+.project-card h2 {
+  font-size: 20px;
+  color: var(--ink);
+  margin-bottom: 10px;
+}
+
+.project-card p {
+  color: var(--muted);
+  margin-bottom: 15px;
+}
+
+.project-card a {
+  display: inline-block;
+  text-decoration: none;
+  color: var(--brand);
+  font-weight: bold;
+  margin-top: 5px;
+}
+
+/* Responsive Navbar / Sidebar */
+@media (max-width: 991px) {
+  .navbar {
+    position: fixed;
+    top: 0;
+    left: -260px;
+    width: 250px;
+    height: 100vh;
+    background: var(--ink);
+    flex-direction: column;
+    padding-top: 60px;
+    gap: 0;
+    transition: left 0.3s ease;
+    z-index: 999;
+  }
+
+  .navbar.active {
+    left: 0;
+  }
+
+  .navbar li {
+    margin: 20px 0;
+    text-align: center;
+  }
+
+  .navbar li a {
+    color: white;
+    font-size: 18px;
+  }
+
+  .menu-toggle {
+    display: block;
+  }
+}

@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Contact - Devis Tech</title>
+  <link rel="stylesheet" href="contact.css">
+</head>
+<body>
+  <!-- Navbar -->
+  <header>
+    <nav class="navbar">
+      <div class="logo">Devis Tech</div>
+      <ul class="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="skills.html">Skills</a></li>
+        <li><a href="projects.html">Projects</a></li>
+        <li><a href="contact.html" class="active">Contact</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <!-- Contact Section -->
+  <section class="contact">
+    <div class="container">
+      <h1>Contact Me</h1>
+      <p class="intro">Have a project in mind? Let's connect! You can reach me directly or send a quick message below.</p>
+
+      <div class="contact-info">
+        <p><strong>Phone:</strong> <a href="tel:2348122614947">08122614947</a></p>
+        <p><strong>WhatsApp:</strong> <a href="https://wa.me/2348034407044" target="_blank">08034407044</a></p>
+        <p><strong>Email:</strong> <a href="mailto:devisdevonline@gmail.com">devisdevonline@gmail.com</a></p>
+      </div>
+
+      <form class="contact-form" id="contactForm">
+        <input type="text" id="name" placeholder="Your Name" required>
+        <input type="email" id="email" placeholder="Your Email" required>
+        <input type="text" id="phone" placeholder="Your Phone Number" required>
+        <textarea id="message" placeholder="Your Message" required></textarea>
+        <button type="submit">Send via WhatsApp</button>
+      </form>
+
+      <!-- Success message -->
+      <p id="statusMsg" style="color: green; margin-top: 10px; display: none;">
+        ✅ Opening WhatsApp with your message...
+      </p>
+    </div>
+  </section>
+
+  <script>
+    document.getElementById("contactForm").addEventListener("submit", function(e){
+      e.preventDefault();
+
+      // collect data
+      let name = document.getElementById("name").value;
+      let email = document.getElementById("email").value;
+      let phone = document.getElementById("phone").value;
+      let message = document.getElementById("message").value;
+
+      // your WhatsApp number
+      let receiver = "2348034407044";
+
+      // create WhatsApp link
+      let whatsappURL = "https://wa.me/" + receiver + "?text=" 
+        + "*New Contact from Devis Tech Website*%0A%0A"
+        + "👤 Name: " + name + "%0A"
+        + "📧 Email: " + email + "%0A"
+        + "📱 Phone: " + phone + "%0A"
+        + "💬 Message: " + message;
+
+      // show status text
+      document.getElementById("statusMsg").style.display = "block";
+
+      // open WhatsApp
+      window.open(whatsappURL, "_blank");
+    });
+  </script>
+</body>
+</html>
