@@ -8,18 +8,32 @@
 </head>
 <body>
   <!-- Navbar -->
-  <header>
-    <nav class="navbar">
+ <header>
+    <div class="header-container">
       <div class="logo">Devis Tech</div>
-      <ul class="nav-links">
+
+      <!-- Desktop Navbar -->
+      <ul class="navbar">
         <li><a href="index.html">Home</a></li>
         <li><a href="about.html">About</a></li>
-        <li><a href="skills.html" class="active">Skills</a></li>
+        <li><a href="skills.html">Skills</a></li>
         <li><a href="projects.html">Projects</a></li>
         <li><a href="contact.html">Contact</a></li>
       </ul>
-    </nav>
+
+      <!-- Toggle Button for mobile -->
+      <div class="toggle-btn" id="toggle-btn">☰</div>
+    </div>
   </header>
+
+  <!-- Sidebar (Mobile) -->
+  <ul class="sidebar" id="sidebar">
+    <li><a href="index.html">Home</a></li>
+    <li><a href="about.html">About</a></li>
+    <li><a href="skills.html">Skills</a></li>
+    <li><a href="projects.html">Projects</a></li>
+    <li><a href="contact.html ">Contact</a></li>
+  </ul><br><br><br><br>
 
   <!-- Skills Section -->
   <section class="skills">
@@ -52,10 +66,7 @@
           <h2>Firebase</h2>
           <p>Integrating authentication, database, and hosting for web apps.</p>
         </div>
-        <div class="skill-card">
-          <h2>UI/UX Basics</h2>
-          <p>Designing with user experience in mind for better engagement.</p>
-        </div>
+       
         <div class="skill-card">
           <h2>Problem Solving</h2>
           <p>Creative and logical solutions to real-world web challenges.</p>
@@ -64,4 +75,12 @@
     </div>
   </section>
 </body>
+<script>
+   const toggleBtn = document.getElementById('toggle-btn');
+    const sidebar = document.getElementById('sidebar');
+
+    toggleBtn.addEventListener('click', () => {
+      sidebar.classList.toggle('active');
+    });
+</script>
 </html>
