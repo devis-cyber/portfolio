@@ -7,19 +7,33 @@
   <link rel="stylesheet" href="about.css">
 </head>
 <body>
-  <!-- Navbar -->
+   <!-- Header / Navbar -->
   <header>
-    <nav class="navbar">
+    <div class="header-container">
       <div class="logo">Devis Tech</div>
-      <ul class="nav-links">
+
+      <!-- Desktop Navbar -->
+      <ul class="navbar">
         <li><a href="index.html">Home</a></li>
-        <li><a href="about.html" class="active">About</a></li>
+        <li><a href="about.html">About</a></li>
         <li><a href="skills.html">Skills</a></li>
         <li><a href="projects.html">Projects</a></li>
         <li><a href="contact.html">Contact</a></li>
       </ul>
-    </nav>
+
+      <!-- Toggle Button for mobile -->
+      <div class="toggle-btn" id="toggle-btn">☰</div>
+    </div>
   </header>
+
+  <!-- Sidebar (Mobile) -->
+  <ul class="sidebar" id="sidebar">
+    <li><a href="index.html">Home</a></li>
+    <li><a href="about.html">About</a></li>
+    <li><a href="skills.html">Skills</a></li>
+    <li><a href="projects.html">Projects</a></li>
+    <li><a href="contact.html ">Contact</a></li>
+  </ul><br><br>
 
   <!-- About Section -->
   <section class="about">
@@ -50,4 +64,13 @@
     </div>
   </section>
 </body>
+ <script>
+    const toggleBtn = document.getElementById('toggle-btn');
+    const sidebar = document.getElementById('sidebar');
+
+    toggleBtn.addEventListener('click', () => {
+      sidebar.classList.toggle('active');
+    });
+  </script>
+
 </html>
