@@ -1,64 +1,509 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Devis Tech - Frontend Developer</title>
-  <link rel="stylesheet" href="style.css">
+  <title>DevisTech | Ultra-Gen 2025</title>
+  <style>
+    /* ========== 2025 CORE SYSTEM ========== */
+    :root {
+      --accent: #00d4ff;
+      --accent-glow: rgba(0, 212, 255, 0.4);
+      --bg: #030712;
+      --surface: rgba(15, 23, 42, 0.7);
+      --text: #ffffff;
+      --muted: #94a3b8;
+      --glass: blur(30px) saturate(210%);
+      --card-border: rgba(255, 255, 255, 0.1);
+    }
+
+    [data-theme="light"] {
+      --bg: #f8fafc;
+      --surface: rgba(255, 255, 255, 0.7);
+      --text: #0f172a;
+      --muted: #64748b;
+      --card-border: rgba(0, 0, 0, 0.08);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Inter', sans-serif;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+      transition: background 0.3s, color 0.3s;
+    }
+
+    /* ========== LIQUID NAV ========== */
+    nav {
+      position: fixed;
+      top: 25px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 95%;
+      max-width: 1100px;
+      z-index: 10000;
+      padding: 12px 35px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: var(--surface);
+      backdrop-filter: var(--glass);
+      border: 1px solid var(--card-border);
+      border-radius: 100px;
+    }
+
+    .logo {
+      font-weight: 900;
+      text-decoration: none;
+      color: var(--text);
+      font-size: 1.5rem;
+      letter-spacing: -2px;
+    }
+
+    .logo span {
+      color: var(--accent);
+      text-shadow: 0 0 15px var(--accent-glow);
+    }
+
+    .nav-right {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 35px;
+      list-style: none;
+    }
+
+    .nav-links a {
+      text-decoration: none;
+      color: var(--muted);
+      font-size: 0.85rem;
+      font-weight: 700;
+      position: relative;
+      transition: 0.3s;
+      padding: 5px 0;
+    }
+
+    .nav-links a::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 50%;
+      width: 0;
+      height: 2px;
+      background: var(--accent);
+      box-shadow: 0 0 12px var(--accent);
+      transform: translateX(-50%);
+      transition: width 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    .nav-links a:hover::after {
+      width: 100%;
+    }
+
+    #theme-toggle {
+      background: none;
+      border: none;
+      cursor: pointer;
+      font-size: 1.2rem;
+      color: var(--text);
+    }
+
+    @media (max-width: 768px) {
+      nav {
+        flex-direction: column;
+        border-radius: 30px;
+        gap: 15px;
+        padding: 20px;
+        top: 15px;
+      }
+      .nav-links { gap: 15px; }
+    }
+
+    /* ========== HIGH-OCTANE HEADERS ========== */
+    .section-header {
+      margin-bottom: 70px;
+      position: relative;
+    }
+
+    .section-header h2 {
+      font-size: clamp(2.5rem, 6vw, 4rem);
+      font-weight: 900;
+      text-transform: uppercase;
+      letter-spacing: -1px;
+      display: inline-block;
+      background: linear-gradient(to right, #fff, var(--muted));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      transition: letter-spacing 0.8s ease;
+    }
+
+    .section-header h2 span {
+      color: var(--accent);
+      -webkit-text-fill-color: var(--accent);
+      text-shadow: 0 0 20px var(--accent-glow);
+    }
+
+    .header-line {
+      width: 0;
+      height: 4px;
+      background: var(--accent);
+      margin-top: 10px;
+      border-radius: 10px;
+      box-shadow: 0 0 15px var(--accent);
+      transition: width 1s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .reveal.active .header-line {
+      width: 80px;
+    }
+
+    .reveal.active h2 {
+      letter-spacing: 2px;
+    }
+
+    /* ========== REVEAL SYSTEM ========== */
+    .reveal {
+      opacity: 0;
+      filter: blur(20px);
+      transform: translateY(60px) scale(0.95);
+      transition: all 1s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .reveal.active {
+      opacity: 1;
+      filter: blur(0px);
+      transform: translateY(0) scale(1);
+    }
+
+    .reveal.out {
+      opacity: 0;
+      transform: translateY(-50px);
+      filter: blur(10px);
+    }
+
+    /* ========== HERO SECTION ========== */
+    .hero {
+      height: 100vh;
+      position: sticky;
+      top: 0;
+      display: flex;
+      align-items: center;
+      padding: 0 10%;
+      z-index: 1;
+      background: radial-gradient(circle at 80% 20%, var(--accent-glow), transparent 60%);
+    }
+
+    .hero h1 {
+      font-size: clamp(2.8rem, 10vw, 6.5rem);
+      font-weight: 900;
+      line-height: 0.9;
+      letter-spacing: -5px;
+    }
+
+    .hero p.hero-sub {
+      max-width: 500px;
+      font-size: 1.1rem;
+      color: var(--muted);
+      margin-top: 25px;
+      font-weight: 500;
+      line-height: 1.6;
+    }
+
+    /* ========== SPACING ========== */
+    .bump {
+      height: 140px;
+      margin-top: -140px;
+      position: relative;
+      z-index: 5;
+    }
+
+    .bump svg {
+      width: 100%;
+      height: 100%;
+      fill: var(--bg);
+    }
+
+    #content-wrapper {
+      position: relative;
+      z-index: 6;
+      background: var(--bg);
+    }
+
+    section {
+      padding: 160px 10%;
+    }
+
+    /* ========== STACK GRID ========== */
+    .stack-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 25px;
+    }
+
+    .bento-card {
+      background: var(--surface);
+      backdrop-filter: var(--glass);
+      border: 1px solid var(--card-border);
+      border-radius: 35px;
+      padding: 40px;
+      transition: 0.5s;
+    }
+
+    .bento-card:hover {
+      transform: translateY(-10px);
+      border-color: var(--accent);
+      box-shadow: 0 15px 40px rgba(0, 0, 0, 0.5);
+    }
+
+    .bento-card h3 {
+      color: var(--accent);
+      font-size: 1.6rem;
+      margin-bottom: 10px;
+    }
+
+    /* ========== PRODUCTION LOG ========== */
+    .work-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+      gap: 50px;
+    }
+
+    .work-card {
+      border-radius: 45px;
+      overflow: hidden;
+      position: relative;
+      height: 400px;
+      background: #000;
+      border: 1px solid var(--card-border);
+      transition: 0.6s;
+      text-decoration: none;
+      color: white;
+      display: block;
+    }
+
+    .work-card img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      opacity: 0.6;
+      transition: 1s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .work-card:hover img {
+      transform: scale(1.1);
+      opacity: 0.2;
+    }
+
+    .work-overlay {
+      position: absolute;
+      inset: 0;
+      padding: 50px;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      opacity: 0;
+      transform: translateY(30px);
+      transition: 0.6s;
+    }
+
+    .work-card:hover .work-overlay {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .work-overlay h3 {
+      font-size: 1.8rem;
+      margin-bottom: 10px;
+    }
+
+    .work-overlay p {
+      color: var(--muted);
+      font-size: 1rem;
+      line-height: 1.4;
+    }
+
+    /* ========== CONTACT SIGNAL (WIDER & LARGER) ========== */
+    .contact-card {
+      max-width: 950px;
+      margin: 0 auto;
+      background: var(--surface);
+      padding: 70px;
+      border-radius: 60px;
+      border: 1px solid var(--card-border);
+    }
+
+    @media (max-width: 768px) {
+      .contact-card { width: 95%; padding: 40px 20px; }
+      section { padding: 80px 5%; }
+    }
+
+    .btn {
+      background: var(--accent);
+      color: #000;
+      font-weight: 900;
+      padding: 25px;
+      width: 100%;
+      border-radius: 100px;
+      border: none;
+      cursor: pointer;
+      text-transform: uppercase;
+      letter-spacing: 4px;
+      transition: 0.4s;
+    }
+
+    input,
+    textarea {
+      width: 100%;
+      padding: 25px;
+      margin-bottom: 25px;
+      border-radius: 20px;
+      background: rgba(0, 0, 0, 0.5);
+      border: 1px solid var(--card-border);
+      color: white;
+      outline: none;
+      font-size: 1.1rem;
+    }
+
+    footer {
+      padding: 100px 8% 50px;
+      text-align: center;
+      opacity: 0.4;
+      transition: 0.5s;
+      letter-spacing: 3px;
+      font-size: 0.8rem;
+    }
+    footer:hover { opacity: 1; }
+  </style>
 </head>
+
 <body>
 
-  <!-- Header / Navbar -->
-  <header>
-    <div class="header-container">
-      <div class="logo">Devis Tech</div>
-
-      <!-- Desktop Navbar -->
-      <ul class="navbar">
-        <li><a href="index.html">Home</a></li>
-        <li><a href="about.html">About</a></li>
-        <li><a href="skills.html">Skills</a></li>
-        <li><a href="projects.html">Projects</a></li>
-        <li><a href="contact.html">Contact</a></li>
+  <nav>
+    <a href="#" class="logo">DEVIS<span>TECH</span></a>
+    <div class="nav-right">
+      <ul class="nav-links">
+        <li><a href="#stack">Nexus</a></li>
+        <li><a href="#work">Log</a></li>
+        <li><a href="#contact">Signal</a></li>
       </ul>
-
-      <!-- Toggle Button for mobile -->
-      <div class="toggle-btn" id="toggle-btn">☰</div>
+      <button id="theme-toggle">🌙</button>
     </div>
-  </header>
+  </nav>
 
-  <!-- Sidebar (Mobile) -->
-  <ul class="sidebar" id="sidebar">
-    <li><a href="index.html">Home</a></li>
-    <li><a href="about.html">About</a></li>
-    <li><a href="skills.html">Skills</a></li>
-    <li><a href="project.html">Projects</a></li>
-    <li><a href="contact.html">Contact</a></li>
-  </ul>
-
-  <!-- Hero Section -->
-  <section class="hero" id="hero">
-    <div class="hero-content">
-      <img src="profile.jpg" alt="Pius Victor" class="profile-img">
-      <h1>Devis Tech</h1>
-      <h2>Frontend Developer</h2>
-      <p>Building modern, responsive, and user-friendly websites.</p>
-      <a href="https://devis-cyber.github.io/portfolio/about.html" target="_blank" class="hero-btn">Visit Portfolio</a>
+  <div class="hero">
+    <div id="hero-inner">
+      <p class="reveal"
+        style="color: var(--accent); font-weight: 800; letter-spacing: 10px; text-transform: uppercase; margin-bottom: 20px; font-size: 0.65rem;">
+        Cyber-Architect 2025</p>
+      <h1 class="reveal">THE CODE.<br><span style="color: var(--accent)">THE CANVAS.</span></h1>
     </div>
-  </section>
+  </div>
 
-  <!-- JS for Sidebar Toggle -->
+  <div class="bump">
+    <svg viewBox="0 0 1440 140" preserveAspectRatio="none"><path d="M0,140 C480,0 960,0 1440,140 L1440,140 L0,140 Z"></path></svg>
+  </div>
+
+  <div id="content-wrapper">
+    <section id="stack">
+      <div class="section-header reveal">
+        <h2>Tech <span>Nexus</span></h2>
+        <div class="header-line"></div>
+      </div>
+      <div class="stack-grid">
+        <div class="bento-card reveal"><h3>Logic Engine</h3><p>HTML, CSS AND JAVASCRIPT</p></div>
+        <div class="bento-card reveal"><h3>Cloud Ops</h3><p>FIREBASE AUTH AND DATABASE</p></div>
+        <div class="bento-card reveal"><h3>Graphic Design</h3><p>Leveraging Canva AI for high-velocity branding and visual communication.</p></div>
+      </div>
+    </section>
+
+    <section id="work">
+      <div class="section-header reveal">
+        <h2>Production <span>Log</span></h2>
+        <div class="header-line"></div>
+      </div>
+      <div class="work-grid">
+        <a href="devis-cyber.github.io" target="_blank" class="work-card reveal">
+          <img src="chrome-effect-logo-mockup_1016288-85.jpg" alt="Devis Learning">
+          <div class="work-overlay"><h3>Learning OS</h3><p>Cloud-integrated educational platform engineered for global scaling.</p></div>
+        </a>
+        <a href="devis-cyber.github.io" target="_blank" class="work-card reveal">
+          <img src="cart.jpeg" alt="Spoonify">
+          <div class="work-overlay"><h3>Spoonify</h3><p>Global culinary engine powered by real-time API synchronization.</p></div>
+        </a>
+      </div>
+    </section>
+
+    <section id="contact">
+      <div class="contact-card reveal">
+        <h2 style="margin-bottom: 40px; letter-spacing: -2px;">INITIALIZE <span style="color: var(--accent)">SIGNAL</span></h2>
+        <form id="wa-form">
+          <input type="text" id="name" placeholder="Your Name" required>
+          <input type="email" id="email" placeholder="Communication Email" required>
+          <textarea id="message" rows="5" placeholder="Define mission requirements..." required></textarea>
+          <button type="submit" class="btn">Send via Whatsapp</button>
+        </form>
+      </div>
+    </section>
+
+    <footer>
+      &copy; 2025 DEVIS TECH // HIGH FIDELITY DIGITAL ECOSYSTEMS
+    </footer>
+  </div>
+
   <script>
-    const toggleBtn = document.getElementById('toggle-btn');
-    const sidebar = document.getElementById('sidebar');
+    const themeBtn = document.getElementById('theme-toggle');
+    themeBtn.addEventListener('click', () => {
+      const isDark = document.body.getAttribute('data-theme') !== 'light';
+      document.body.setAttribute('data-theme', isDark ? 'light' : 'dark');
+      themeBtn.innerText = isDark ? '☀️' : '🌙';
+    });
 
-    toggleBtn.addEventListener('click', () => {
-      sidebar.classList.toggle('active');
+    document.getElementById('wa-form').addEventListener('submit', function(e) {
+      e.preventDefault();
+      const n = document.getElementById('name').value;
+      const m = document.getElementById('message').value;
+      window.open(`wa.me:* ${n}%0A*Msg:* ${m}`, '_blank');
+    });
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('active');
+          entry.target.classList.remove('out');
+        } else {
+          if (entry.boundingClientRect.top < 0) entry.target.classList.add('out');
+          else entry.target.classList.remove('active');
+        }
+      });
+    }, { threshold: 0.1 });
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+    window.addEventListener('scroll', () => {
+      const scrolled = window.scrollY;
+      const inner = document.getElementById('hero-inner');
+      const vh = window.innerHeight;
+      if (inner && scrolled < vh) {
+        const factor = scrolled / vh;
+        inner.style.transform = `translateY(${scrolled * 0.4}px) scale(${1 - factor * 0.15})`;
+        inner.style.opacity = 1 - (factor * 1.5);
+      }
     });
   </script>
-
 </body>
 </html>
-
-
-
